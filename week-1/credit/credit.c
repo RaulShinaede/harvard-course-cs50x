@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-bool check_validaty(long long card_number);
+bool check_validity(long long card_number);
 void print_brand(long long card_number);
 
 int main(void)
@@ -10,7 +10,7 @@ int main(void)
 
     long long card_number = get_long_long("Number: ");
 
-    if (check_validaty(card_number))
+    if (check_validity(card_number))
     {
         print_brand(card_number);
     }
@@ -50,7 +50,7 @@ int get_number_length(long long card_number)
 
     return length;
 }
-bool check_length_validaty(long long card_number)
+bool check_length_validity(long long card_number)
 {
 
     int length = get_number_length(card_number);
@@ -64,7 +64,7 @@ bool check_length_validaty(long long card_number)
 
     return true;
 }
-bool check_digits_validaty(long long card_number)
+bool check_digits_validity(long long card_number)
 {
 
     long long temp = card_number;
@@ -75,9 +75,7 @@ bool check_digits_validaty(long long card_number)
     while (temp != 0)
     {
         sum += get_product_sum((temp % 10) * 2);
-
-        temp /= 10;
-        temp /= 10;
+        temp /= 100;
     }
 
     temp = card_number;
@@ -86,8 +84,7 @@ bool check_digits_validaty(long long card_number)
     {
         sum += get_product_sum(temp % 10);
 
-        temp /= 10;
-        temp /= 10;
+        temp /= 100;
     }
 
     if ((sum % 10) != 0)
@@ -97,14 +94,15 @@ bool check_digits_validaty(long long card_number)
 
     return true;
 }
-bool check_validaty(long long card_number)
+bool check_validity(long long card_number)
 {
 
-    if (!check_length_validaty(card_number))
+    if (!check_length_validity(card_number))
     {
         return false;
     }
-    if (!check_digits_validaty(card_number))
+
+    if (!check_digits_validity(card_number))
     {
         return false;
     }
@@ -200,5 +198,3 @@ void print_brand(long long card_number)
         printf("INVALID\n");
     }
 }
-
-
